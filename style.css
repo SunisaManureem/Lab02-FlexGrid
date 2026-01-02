@@ -1,0 +1,190 @@
+/* Reset CSS เพื่อให้คำนวณขนาดกล่องได้ง่ายขึ้น */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    /* ยกเลิก width 650px เดิม เพื่อให้ยืดหยุ่นเต็มจอ */
+    width: 100%;
+    /* กำหนดความกว้างสูงสุดเพื่อไม่ให้เนื้อหาแบะเกินไปในจอใหญ่ */
+    max-width: 1200px;
+    margin: 0 auto;
+    background: black;
+    color: #FFF;
+    font-family: sans-serif; /* แก้ไขคำผิดจาก sans -serif */
+    font-size: 20px;
+    padding: 0 10px; /* เพิ่มระยะห่างขอบจอเล็กน้อย */
+}
+
+/* =========================================
+   Flexbox Application (โจทย์ข้อ 1)
+   ใช้จัดเมนู Navigation
+   ========================================= */
+nav ul {
+    padding: 0;
+    margin: 0;
+    display: flex; /* ใช้ Flexbox */
+    justify-content: center; /* จัดกึ่งกลางแนวนอน */
+    flex-wrap: wrap; /* ถ้าจอเล็กมากให้ปัดตกบรรทัด */
+    gap: 20px; /* ระยะห่างระหว่างเมนู */
+}
+
+li {
+    list-style: none;
+    /* ลบ float: left เดิมออก เพราะใช้ Flexbox แล้ว */
+}
+
+a.menu {
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    background-color: #333;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+a.menu:hover {
+    background-color: #555;
+}
+
+header {
+    padding: 20px 0px;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+h3 {
+    font-size: 24px;
+    margin-top: 0;
+    text-shadow: 2px 2px 4px #000;
+}
+
+a {
+    color: #FAA202;
+    font-weight: bold;
+}
+
+/* =========================================
+   CSS Grid Application (โจทย์ข้อ 2)
+   ใช้จัดโครงสร้าง Main Layout และ Planet Cards
+   ========================================= */
+
+main {
+    margin-top: 30px;
+    display: grid; /* เปิดใช้ Grid */
+    /* แบ่งคอลัมน์: เนื้อหาหลัก 3 ส่วน (75%) | แถบข้าง 1 ส่วน (25%) */
+    grid-template-columns: 3fr 1fr; 
+    gap: 20px; /* ระยะห่างระหว่างคอลัมน์ */
+}
+
+/* จัดการ์ดดาวเคราะห์ภายใน Article */
+.planet-container {
+    display: grid;
+    /* ให้เรียงดาวเคราะห์เป็น 2 คอลัมน์ ถ้าเนื้อหาพอ */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* ปรับแต่งเนื้อหาใน article ให้ขยายเต็มพื้นที่ grid area */
+article h2 {
+    grid-column: 1 / -1; /* หัวข้อกินพื้นที่เต็มความกว้าง */
+    text-align: center;
+    border-bottom: 2px solid #555;
+    padding-bottom: 10px;
+}
+
+/* =========================================
+   Styles for Content (Table, Section, Aside)
+   ========================================= */
+
+aside {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    height: fit-content; /* ให้สูงเท่าเนื้อหา */
+}
+
+table {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    border-spacing: 0;
+    width: 100%; /* ให้ตารางยืดเต็มกล่อง */
+    background-color: rgba(0, 0, 0, 0.6); /* พื้นหลังจางๆ ให้อ่านง่าย */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+caption {
+    margin-bottom: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: left;
+    color: #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 5px;
+    border-bottom: 1px solid #444;
+}
+
+section {
+    padding: 20px;
+    border: 2px solid #FFF;
+    border-radius: 20px;
+    box-shadow: 5px 5px 15px rgba(136, 136, 136, 0.2);
+    
+    /* ปรับเรื่อง Background Image ให้สวยงาม */
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply; /* ผสมสีดำกับรูปให้อ่านตัวหนังสือออก */
+    background-color: rgba(0,0,0,0.5); 
+}
+
+#jupiter { background-image: url(../images/Jupiter.jpg); }
+#saturn  { background-image: url(../images/Saturn.jpg); }
+#uranus  { background-image: url(../images/Uranus.jpg); }
+#neptune { background-image: url(../images/Neptune.jpg); }
+
+footer {
+    text-align: center;
+    background-color: #388bff;
+    padding: 20px;
+    margin-top: 40px;
+    border-radius: 10px 10px 0 0;
+    color: white;
+}
+
+/* =========================================
+   Responsive Design (โจทย์ข้อ 1.1)
+   การปรับหน้าจอ 1/4 หรือจอมือถือ
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* เมื่อหน้าจอเล็กกว่า 768px (Tablet/Mobile) */
+    
+    main {
+        /* เปลี่ยนจาก 2 คอลัมน์ (3fr 1fr) เป็น 1 คอลัมน์เรียงลงมา */
+        grid-template-columns: 1fr;
+    }
+
+    .planet-container {
+        /* บังคับให้ดาวเคราะห์เรียง 1 คอลัมน์ */
+        grid-template-columns: 1fr;
+    }
+
+    aside {
+        /* ย้าย Aside ไปอยู่ด้านล่าง (ตาม Flow ของ 1 column) */
+        order: 2; 
+    }
+    
+    nav ul {
+        flex-direction: column; /* เมนูเรียงแนวตั้งบนมือถือ */
+        align-items: center;
+    }
+    
+    body {
+        font-size: 18px; /* ลดขนาดฟอนต์นิดหน่อย */
+    }
+}
