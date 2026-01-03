@@ -1,193 +1,566 @@
 /* =========================================
-   Lab 02 CSS Layouts (Flexbox + Grid)
-   เงื่อนไขสำคัญ: ต้องไม่มี float ในการจัด Layout
-   แบ่งหน้าที่ตามกลุ่ม: คนที่ 1–6
+   Lab 02 CSS Layouts (Flexbox + Grid) — Cute Galaxy (Professional)
+   ✅ No float | ✅ Flexbox + Grid | ✅ Responsive
    ========================================= */
 
-/* (รวม) คุม Box Model ให้ predictable */
-* {
-  box-sizing: border-box;
+/* คนที่ 6 (รวม): reset */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+:root{
+  /* Cute galaxy palette */
+  --ink: #f6f7ff;
+  --muted: rgba(246,247,255,.78);
+
+  --purple: #c084fc;
+  --violet: #8b5cf6;
+  --cyan: #67e8f9;
+  --blue: #93c5fd;
+  --pink: #f9a8d4;
+
+  --link: #eaf2ff;
+
+  /* frames + glow */
+  --frame: rgba(255,255,255,.28);
+  --frame-strong: rgba(255,255,255,.62);
+
+  --glass: rgba(255,255,255,.10);
+  --glass2: rgba(255,255,255,.16);
+
+  --maxw: 1200px;
+  --gutter: clamp(14px, 2.2vw, 28px);
+
+  --r-sm: 14px;
+  --r-md: 18px;
+  --r-lg: 22px;
+
+  --shadow: 0 20px 70px rgba(0,0,0,.55);
+
+  --glow-p: 0 0 36px rgba(192,132,252,.30);
+  --glow-c: 0 0 34px rgba(103,232,249,.26);
+  --glow-b: 0 0 30px rgba(147,197,253,.20);
+  --glow-k: 0 12px 36px rgba(0,0,0,.55);
 }
 
-/* (รวม) Base: ให้ยืด/หดตามหน้าจอคอม (จอใหญ่ก็ใหญ่ตาม) */
-body {
-  width: 100%;
+/* =========================
+   Background: starry cute galaxy (เหมือนภาพตัวอย่างมากขึ้น)
+   ========================= */
+body{
   margin: 0;
-  padding: 0 24px;
+  padding: 0 var(--gutter);
+  min-height: 100svh;
 
-  background: black;
-  color: #fff;
-  font: 20px sans-serif;
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: clamp(16px, 1.1vw + 10px, 18px);
+  line-height: 1.65;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+  /* Nebula + star tiles (repeat) */
+  background-image:
+    /* nebula blobs */
+    radial-gradient(1200px 820px at 22% 18%, rgba(103,232,249,.40), transparent 62%),
+    radial-gradient(1050px 760px at 78% 22%, rgba(192,132,252,.42), transparent 62%),
+    radial-gradient(1100px 820px at 58% 86%, rgba(249,168,212,.28), transparent 65%),
+    radial-gradient(980px 720px at 12% 88%, rgba(147,197,253,.24), transparent 62%),
+
+    /* tiny star tiles */
+    radial-gradient(1px 1px at 18px 22px, rgba(255,255,255,.55) 99%, transparent 100%),
+    radial-gradient(1.1px 1.1px at 62px 88px, rgba(255,255,255,.40) 99%, transparent 100%),
+    radial-gradient(0.9px 0.9px at 120px 44px, rgba(255,255,255,.32) 99%, transparent 100%),
+
+    /* medium stars */
+    radial-gradient(1.8px 1.8px at 32px 44px, rgba(255,255,255,.46) 99%, transparent 100%),
+    radial-gradient(2.2px 2.2px at 96px 18px, rgba(255,255,255,.34) 99%, transparent 100%),
+
+    /* base */
+    linear-gradient(180deg, #07071c, #0b0c2d);
+
+  background-size:
+    auto,
+    auto,
+    auto,
+    auto,
+
+    160px 160px,
+    220px 220px,
+    280px 280px,
+
+    420px 420px,
+    520px 520px,
+
+    auto;
+
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+
+    repeat,
+    repeat,
+    repeat,
+
+    repeat,
+    repeat,
+
+    no-repeat;
+
+  background-attachment: fixed;
 }
 
-/* (รวม) ทำพื้นที่เนื้อหาให้อยู่กลาง + กว้างตามจอ (ปรับ max-width ได้) */
-.header,
-.nav,
-.main,
-.footer {
-  max-width: 1200px;
+/* sparkles drift */
+body::before{
+  content:"";
+  position: fixed;
+  inset: -16%;
+  pointer-events: none;
+
+  background:
+    radial-gradient(700px 520px at 28% 40%, rgba(103,232,249,.14), transparent 62%),
+    radial-gradient(760px 540px at 72% 44%, rgba(192,132,252,.14), transparent 62%),
+    radial-gradient(820px 580px at 56% 76%, rgba(249,168,212,.10), transparent 62%);
+
+  filter: blur(14px);
+  opacity: .78;
+  animation: drift 14s ease-in-out infinite alternate;
+}
+@keyframes drift{
+  from { transform: translate3d(-1.2%, -1%, 0) scale(1.02); }
+  to   { transform: translate3d( 1.6%,  1.2%, 0) scale(1.06); }
+}
+
+/* container */
+.header, .nav, .main, .footer{
+  max-width: var(--maxw);
   margin: 0 auto;
 }
 
-/* =========================================
+/* =========================
    คนที่ 1: Header (Flexbox)
-   ========================================= */
-.header {
-  padding: 10px 0px;
-  font-size: 1.5em;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+   ========================= */
+.header{
+  padding: clamp(18px, 2vw, 26px) 0 10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-/* ข้อความ/ลิงก์ */
-h3 {
-  font-size: 20px;
-  margin-top: 0;
-}
-
-a {
-  color: #faa202;
-  font-weight: bold;
-}
-
-/* =========================================
-   คนที่ 2: Nav (Flexbox) — ไม่มี float
-   ========================================= */
-.nav-list {
-  padding: 0;
+.header h1{
   margin: 0;
+  font-size: clamp(1.6rem, 1.9vw + 1rem, 2.15rem);
+  font-weight: 900;
+  letter-spacing: .3px;
 
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  flex-wrap: wrap;
+  padding: 6px 10px;
+  border-radius: var(--r-md);
+
+  color: #ffffff;
+  text-shadow:
+    0 0 18px rgba(103,232,249,.34),
+    0 0 22px rgba(192,132,252,.28),
+    0 0 24px rgba(249,168,212,.18);
 }
 
-.nav-item {
+/* =========================
+   คนที่ 2: Nav (Flexbox)
+   ========================= */
+.nav{ margin-top: 6px; }
+
+.nav-list{
+  margin: 0 auto;
+  padding: 10px 12px;
   list-style: none;
-  float: none; /* ห้ามใช้ float */
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  width: fit-content;
+
+  /* neon pill */
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: var(--r-md);
+  background: rgba(255,255,255,.08);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.08) inset,
+    0 0 30px rgba(103,232,249,.20),
+    0 0 26px rgba(192,132,252,.20),
+    0 18px 60px rgba(0,0,0,.55);
 }
 
-.menu {
-  padding: 0px 10px;
+.nav-item{ list-style:none; }
+
+.menu{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding: 9px 14px;
+  border-radius: 14px;
+
+  text-decoration: none;
+  color: rgba(246,247,255,.95);
+  font-weight: 800;
+  font-size: .95rem;
+
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.18);
+
+  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+}
+.menu:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.12);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.10) inset,
+    0 0 24px rgba(103,232,249,.22),
+    0 0 22px rgba(192,132,252,.22);
+}
+.menu:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(103,232,249,.28), 0 0 20px rgba(192,132,252,.22);
 }
 
-/* =========================================
-   คนที่ 3: Main Layout (CSS Grid)
-   - จอใหญ่: 2 คอลัมน์ (content + sidebar)
-   ========================================= */
-.main {
-  margin-top: 50px;
+/* =========================
+   คนที่ 3: Main Layout (Grid)
+   ========================= */
+.main{ margin-top: 16px; }
+
+.main-layout{
+  display:grid;
+  grid-template-areas:
+    "title  title"
+    "content sidebar";
+  grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr);
+  gap: clamp(16px, 2.2vw, 24px);
+  align-items:start;
 }
 
-.main-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(260px, 1fr);
-  gap: 20px;
-  align-items: start;
+/* =========================
+   คนที่ 6: Title (สมมาตร)
+   ========================= */
+.page-title{
+  grid-area: title;
+  margin: 0 0 10px;
+  text-align: center;
+
+  font-size: clamp(1.15rem, 1vw + 1rem, 1.6rem);
+  font-weight: 900;
+  letter-spacing: .2px;
+
+  color: rgba(246,247,255,.95);
+  text-shadow:
+    0 0 14px rgba(103,232,249,.18),
+    0 0 18px rgba(192,132,252,.18);
 }
 
-/* =========================================
-   คนที่ 6: Content (Flex)
-   ========================================= */
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+.content{ grid-area: content; }
 
-/* =========================================
-   คนที่ 5: Cards
-   - จอใหญ่: Grid ปรับจำนวนคอลัมน์อัตโนมัติ (auto-fit)
-   ========================================= */
-.cards {
-  display: grid;
-  gap: 20px;
+/* =========================
+   คนที่ 5: Cards (Grid)
+   ========================= */
+.cards{
+  display:grid;
+  gap: 18px;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
-/* การ์ดแต่ละใบ */
-.card {
-  padding: 30px 20px 30px 20px;
-  border: 2px solid #fff;
-  border-radius: 20px;
-  box-shadow: 10px 10px 5px #888888;
+/* Glass neon card + neon gradient border (เหมือนภาพตัวอย่าง) */
+.card{
+  position: relative;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  isolation: isolate;
 
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding: 16px 16px 14px;
+
+  border: 2px solid transparent;
+  background:
+    /* inner glass */
+    linear-gradient(rgba(255,255,255,.10), rgba(255,255,255,.08)) padding-box,
+    /* neon border */
+    linear-gradient(135deg,
+      rgba(103,232,249,.95),
+      rgba(192,132,252,.95),
+      rgba(249,168,212,.65)
+    ) border-box;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.10) inset,
+    0 0 34px rgba(103,232,249,.18),
+    0 0 30px rgba(192,132,252,.16),
+    0 22px 60px rgba(0,0,0,.58);
+
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+/* overlay for readability on planet image */
+.card::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(10,10,30,.16), rgba(10,10,30,.74));
+}
+
+.card > *{
+  position: relative;
+  z-index: 2;
+}
+
+.card:hover{
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.12) inset,
+    0 0 40px rgba(103,232,249,.22),
+    0 0 36px rgba(192,132,252,.20),
+    0 26px 78px rgba(0,0,0,.62);
+}
+
+.card h3{
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 900;
+
+  display:flex;              /* ✅ ทำให้ใส่ icon ได้ */
+  align-items:center;
+  gap: 10px;
+}
+
+.card p{
+  margin: 0;
+  color: var(--muted);
+}
+
+/* planet background */
+.card{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* รูปพื้นหลัง */
-#jupiter {
-  background-image: url(../images/Jupiter.jpg);
-}
-#saturn {
-  background-image: url(../images/Saturn.jpg);
-}
-#uranus {
-  background-image: url(../images/Uranus.jpg);
-}
-#neptune {
-  background-image: url(../images/Neptune.jpg);
+/* style.css อยู่โฟลเดอร์เดียวกับ index.html */
+#jupiter { background-image: url(images/Jupiter.jpg); }
+#saturn  { background-image: url(images/Saturn.jpg); }
+#uranus  { background-image: url(images/Uranus.jpg); }
+#neptune { background-image: url(images/Neptune.jpg); }
+
+/* ✅ planet icon บนหัวการ์ด (เหมือนภาพตัวอย่าง) */
+#jupiter h3::before,
+#saturn  h3::before,
+#uranus  h3::before,
+#neptune h3::before{
+  content:"";
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+
+  background-size: cover;
+  background-position: center;
+
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.18) inset,
+    0 0 18px rgba(103,232,249,.16),
+    0 0 18px rgba(192,132,252,.14);
 }
 
-/* =========================================
-   คนที่ 4: Sidebar (Flex)
-   ========================================= */
-.sidebar {
-  display: flex;
+#jupiter h3::before{ background-image: url(images/Jupiter.jpg); }
+#saturn  h3::before{ background-image: url(images/Saturn.jpg); }
+#uranus  h3::before{ background-image: url(images/Uranus.jpg); }
+#neptune h3::before{ background-image: url(images/Neptune.jpg); }
+
+/* button-like link (cyan → purple) */
+.card a{
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 12px;
+  border-radius: 14px;
+  text-decoration: none;
+
+  color: rgba(10,10,18,.96);
+  font-weight: 950;
+
+  background: linear-gradient(90deg, rgba(103,232,249,.98), rgba(192,132,252,.88));
+  border: 1px solid rgba(255,255,255,.22);
+
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.45),
+    0 0 0 1px rgba(255,255,255,.10) inset;
+
+  transition: transform .15s ease, filter .15s ease;
+}
+.card a:hover{ transform: translateY(-1px); filter: brightness(1.08); }
+.card a:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(103,232,249,.30), 0 10px 26px rgba(0,0,0,.45);
+}
+
+/* table (clean + cute) */
+table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .92rem;
+
+  background: rgba(0,0,0,.26);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 14px;
+
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+caption{
+  margin: 10px 0 8px;
+  font-weight: 900;
+  text-align: left;
+  color: rgba(246,247,255,.92);
+}
+
+th, td{
+  padding: 10px 10px;
+  text-align: left;
+  vertical-align: top;
+  color: rgba(246,247,255,.88);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+tbody tr:last-child th,
+tbody tr:last-child td{ border-bottom: none; }
+tbody tr:nth-child(even){ background: rgba(255,255,255,.04); }
+
+/* =========================
+   คนที่ 4: Sidebar (Flex) + neon gradient border
+   ========================= */
+.sidebar{
+  grid-area: sidebar;
+
+  display:flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 
-  padding: 20px;
-  border: 2px solid #fff;
-  border-radius: 16px;
+  padding: 14px;
+  border-radius: var(--r-lg);
+
+  border: 2px solid transparent;
+  background:
+    linear-gradient(rgba(255,255,255,.10), rgba(255,255,255,.08)) padding-box,
+    linear-gradient(135deg,
+      rgba(103,232,249,.95),
+      rgba(192,132,252,.95),
+      rgba(249,168,212,.65)
+    ) border-box;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.10) inset,
+    0 0 30px rgba(192,132,252,.16),
+    0 0 28px rgba(103,232,249,.14),
+    0 22px 60px rgba(0,0,0,.55);
 }
 
-/* ตาราง */
-table {
-  font-size: 1rem;
-  margin-bottom: 10px;
-  border-spacing: 0;
+.sidebar p{
+  margin: 0;
+  padding: 10px 10px;
+  border-radius: var(--r-sm);
+
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(246,247,255,.88);
 }
 
-caption {
-  margin-bottom: 10px;
-  font-size: 0.9em;
-  font-weight: bold;
-  text-align: left;
+@media (min-width: 980px){
+  .sidebar{ position: sticky; top: 16px; }
 }
 
-th,
-td {
-  text-align: left;
-}
-
-/* Footer */
-.footer {
+/* =========================
+   Footer (neon border เบา ๆ)
+   ========================= */
+.footer{
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: var(--r-md);
   text-align: center;
-  background-color: #388bff;
+
+  border: 2px solid transparent;
+  background:
+    linear-gradient(rgba(255,255,255,.08), rgba(255,255,255,.06)) padding-box,
+    linear-gradient(135deg,
+      rgba(103,232,249,.70),
+      rgba(192,132,252,.70),
+      rgba(249,168,212,.45)
+    ) border-box;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow: var(--shadow);
 }
 
-/* =========================================
+.footer hr{
+  border: none;
+  border-top: 1px solid rgba(255,255,255,.14);
+  margin: 8px 0 12px;
+}
+.footer p{ margin: 0; color: rgba(246,247,255,.84); }
+
+/* =========================
    Responsive
-   - จอแคบ: main-layout เป็น 1 คอลัมน์
-   - เหลือประมาณ 1/4 จอ: cards เป็น “แถวเรียงแนวตั้ง” (1 คอลัมน์)
-   ========================================= */
-
-/* จอแคบ: content + sidebar เรียงแนวตั้ง */
-@media (max-width: 900px) {
-  .main-layout {
+   ========================= */
+@media (max-width: 900px){
+  .main-layout{
+    grid-template-areas:
+      "title"
+      "content"
+      "sidebar";
     grid-template-columns: 1fr;
+  }
+  .page-title{ text-align: left; }
+}
+
+@media (max-width: 520px){
+  body{ padding: 0 14px; }
+  .cards{ grid-template-columns: 1fr; }
+
+  /* ลด icon ให้น่ารักพอดีจอ */
+  #jupiter h3::before,
+  #saturn  h3::before,
+  #uranus  h3::before,
+  #neptune h3::before{
+    width: 34px;
+    height: 34px;
   }
 }
 
-/* เหลือประมาณ 1/4 จอ: cards เรียงแนวตั้ง 1 คอลัมน์ */
-@media (max-width: 500px) {
-  .cards {
-    grid-template-columns: 1fr;
-  }
+/* ลด motion */
+@media (prefers-reduced-motion: reduce){
+  body::before{ animation: none; }
+  .menu, .card, .card a{ transition: none; }
+}
+
+/* มือถือ fixed background หน่วง */
+@media (max-width: 560px){
+  body{ background-attachment: scroll; }
 }
