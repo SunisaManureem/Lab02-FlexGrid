@@ -1,6 +1,5 @@
 /* =========================================
-   Lab 02 CSS Layouts (Flexbox + Grid) — Cute Galaxy (Professional)
-   ✅ No float | ✅ Flexbox + Grid | ✅ Responsive
+   Lab 02 CSS Layouts (Flexbox + Grid) 
    ========================================= */
 
 /* คนที่ 6 (รวม): reset */
@@ -9,7 +8,7 @@
 *::after { box-sizing: border-box; }
 
 :root{
-  /* Cute galaxy palette */
+ 
   --ink: #f6f7ff;
   --muted: rgba(246,247,255,.78);
 
@@ -21,7 +20,6 @@
 
   --link: #eaf2ff;
 
-  /* frames + glow */
   --frame: rgba(255,255,255,.28);
   --frame-strong: rgba(255,255,255,.62);
 
@@ -43,9 +41,6 @@
   --glow-k: 0 12px 36px rgba(0,0,0,.55);
 }
 
-/* =========================
-   Background: starry cute galaxy (เหมือนภาพตัวอย่างมากขึ้น)
-   ========================= */
 body{
   margin: 0;
   padding: 0 var(--gutter);
@@ -59,24 +54,19 @@ body{
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
-  /* Nebula + star tiles (repeat) */
   background-image:
-    /* nebula blobs */
     radial-gradient(1200px 820px at 22% 18%, rgba(103,232,249,.40), transparent 62%),
     radial-gradient(1050px 760px at 78% 22%, rgba(192,132,252,.42), transparent 62%),
     radial-gradient(1100px 820px at 58% 86%, rgba(249,168,212,.28), transparent 65%),
     radial-gradient(980px 720px at 12% 88%, rgba(147,197,253,.24), transparent 62%),
 
-    /* tiny star tiles */
     radial-gradient(1px 1px at 18px 22px, rgba(255,255,255,.55) 99%, transparent 100%),
     radial-gradient(1.1px 1.1px at 62px 88px, rgba(255,255,255,.40) 99%, transparent 100%),
     radial-gradient(0.9px 0.9px at 120px 44px, rgba(255,255,255,.32) 99%, transparent 100%),
 
-    /* medium stars */
     radial-gradient(1.8px 1.8px at 32px 44px, rgba(255,255,255,.46) 99%, transparent 100%),
     radial-gradient(2.2px 2.2px at 96px 18px, rgba(255,255,255,.34) 99%, transparent 100%),
 
-    /* base */
     linear-gradient(180deg, #07071c, #0b0c2d);
 
   background-size:
@@ -112,7 +102,6 @@ body{
   background-attachment: fixed;
 }
 
-/* sparkles drift */
 body::before{
   content:"";
   position: fixed;
@@ -133,7 +122,6 @@ body::before{
   to   { transform: translate3d( 1.6%,  1.2%, 0) scale(1.06); }
 }
 
-/* container */
 .header, .nav, .main, .footer{
   max-width: var(--maxw);
   margin: 0 auto;
@@ -183,7 +171,6 @@ body::before{
 
   width: fit-content;
 
-  /* neon pill */
   border: 1px solid rgba(255,255,255,.28);
   border-radius: var(--r-md);
   background: rgba(255,255,255,.08);
@@ -248,7 +235,7 @@ body::before{
 }
 
 /* =========================
-   คนที่ 6: Title (สมมาตร)
+   คนที่ 6: Title 
    ========================= */
 .page-title{
   grid-area: title;
@@ -276,7 +263,6 @@ body::before{
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
-/* Glass neon card + neon gradient border (เหมือนภาพตัวอย่าง) */
 .card{
   position: relative;
   border-radius: var(--r-lg);
@@ -291,9 +277,9 @@ body::before{
 
   border: 2px solid transparent;
   background:
-    /* inner glass */
+   
     linear-gradient(rgba(255,255,255,.10), rgba(255,255,255,.08)) padding-box,
-    /* neon border */
+    
     linear-gradient(135deg,
       rgba(103,232,249,.95),
       rgba(192,132,252,.95),
@@ -312,7 +298,6 @@ body::before{
   transition: transform .18s ease, box-shadow .18s ease;
 }
 
-/* overlay for readability on planet image */
 .card::after{
   content:"";
   position:absolute;
@@ -340,7 +325,7 @@ body::before{
   font-size: 1.15rem;
   font-weight: 900;
 
-  display:flex;              /* ✅ ทำให้ใส่ icon ได้ */
+  display:flex;             
   align-items:center;
   gap: 10px;
 }
@@ -350,20 +335,17 @@ body::before{
   color: var(--muted);
 }
 
-/* planet background */
 .card{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* style.css อยู่โฟลเดอร์เดียวกับ index.html */
 #jupiter { background-image: url(images/Jupiter.jpg); }
 #saturn  { background-image: url(images/Saturn.jpg); }
 #uranus  { background-image: url(images/Uranus.jpg); }
 #neptune { background-image: url(images/Neptune.jpg); }
 
-/* ✅ planet icon บนหัวการ์ด (เหมือนภาพตัวอย่าง) */
 #jupiter h3::before,
 #saturn  h3::before,
 #uranus  h3::before,
@@ -387,7 +369,6 @@ body::before{
 #uranus  h3::before{ background-image: url(images/Uranus.jpg); }
 #neptune h3::before{ background-image: url(images/Neptune.jpg); }
 
-/* button-like link (cyan → purple) */
 .card a{
   margin-top: auto;
   display: inline-flex;
@@ -416,7 +397,6 @@ body::before{
   box-shadow: 0 0 0 3px rgba(103,232,249,.30), 0 10px 26px rgba(0,0,0,.45);
 }
 
-/* table (clean + cute) */
 table{
   width: 100%;
   border-collapse: collapse;
@@ -450,7 +430,7 @@ tbody tr:last-child td{ border-bottom: none; }
 tbody tr:nth-child(even){ background: rgba(255,255,255,.04); }
 
 /* =========================
-   คนที่ 4: Sidebar (Flex) + neon gradient border
+   คนที่ 4: Sidebar (Flex) 
    ========================= */
 .sidebar{
   grid-area: sidebar;
@@ -495,9 +475,6 @@ tbody tr:nth-child(even){ background: rgba(255,255,255,.04); }
   .sidebar{ position: sticky; top: 16px; }
 }
 
-/* =========================
-   Footer (neon border เบา ๆ)
-   ========================= */
 .footer{
   margin-top: 18px;
   padding: 14px 16px;
@@ -544,7 +521,6 @@ tbody tr:nth-child(even){ background: rgba(255,255,255,.04); }
   body{ padding: 0 14px; }
   .cards{ grid-template-columns: 1fr; }
 
-  /* ลด icon ให้น่ารักพอดีจอ */
   #jupiter h3::before,
   #saturn  h3::before,
   #uranus  h3::before,
@@ -554,13 +530,11 @@ tbody tr:nth-child(even){ background: rgba(255,255,255,.04); }
   }
 }
 
-/* ลด motion */
 @media (prefers-reduced-motion: reduce){
   body::before{ animation: none; }
   .menu, .card, .card a{ transition: none; }
 }
 
-/* มือถือ fixed background หน่วง */
 @media (max-width: 560px){
   body{ background-attachment: scroll; }
 }
