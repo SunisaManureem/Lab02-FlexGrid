@@ -8,13 +8,13 @@
   </head>
 
   <body>
-    <!-- คนที่ 1: Header (เพิ่ม class) -->
+    <!-- Header -->
     <header class="header">
       <h1>The Gas Planets site</h1>
     </header>
 
-    <!-- คนที่ 2: Nav (เพิ่ม class) -->
-    <nav class="nav">
+    <!-- Nav -->
+    <nav class="nav" aria-label="Primary navigation">
       <ul class="nav-list">
         <li class="nav-item"><a href="#" class="menu">Home</a></li>
         <li class="nav-item"><a href="#" class="menu">About Us</a></li>
@@ -23,17 +23,17 @@
     </nav>
 
     <main class="main">
-      <!-- คนที่ 3: Main Layout (เพิ่ม wrapper) -->
+      <!-- Main Layout (Grid) -->
       <div class="main-layout">
-        <!-- คนที่ 6: ย้ายหัวข้อออกมานอก article เพื่อให้สมมาตร (span ทั้ง 2 คอลัมน์) -->
         <h2 class="page-title">The gas giants</h2>
 
-        <!-- คนที่ 6: Content (เพิ่ม class) -->
+        <!-- Content -->
         <article class="content">
-          <!-- คนที่ 5: Cards (เพิ่ม wrapper) -->
           <div class="cards">
             <section id="jupiter" class="card">
               <h3>Jupiter</h3>
+              <img class="planet-img" src="images/Jupiter.jpg" alt="Jupiter" />
+
               <p>
                 Jupiter is the fifth planet from the Sun and the largest planet in our Solar
                 System. The Romans named the planet after the god Jupiter. It is a gas giant
@@ -41,35 +41,43 @@
                 System combined.
               </p>
 
-              <table>
-                <caption>Jupiter Facts</caption>
-                <tbody>
-                  <tr>
-                    <th>Distance from the Sun</th>
-                    <td>78,412,020 km</td>
-                  </tr>
-                  <tr>
-                    <th>Equatorial Radius</th>
-                    <td>71,492 km</td>
-                  </tr>
-                  <tr>
-                    <th>Volume</th>
-                    <td>1,425,500,000,000,000 km<sup>3</sup></td>
-                  </tr>
-                  <tr>
-                    <th>Mass</th>
-                    <td>1,898,700,000,000,000,000,000,000 kg</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-wrap">
+                <table class="facts">
+                  <caption>Jupiter Facts</caption>
+                  <tbody>
+                    <tr>
+                      <th>Distance from the Sun</th>
+                      <td>78,412,020 km</td>
+                    </tr>
+                    <tr>
+                      <th>Equatorial Radius</th>
+                      <td>71,492 km</td>
+                    </tr>
+                    <tr>
+                      <th>Volume</th>
+                      <td>1,425,500,000,000,000 km<sup>3</sup></td>
+                    </tr>
+                    <tr>
+                      <th>Mass</th>
+                      <td>1,898,700,000,000,000,000,000,000 kg</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-              <a href="http://solarsystem.jpl.nasa.gov/planets/profile.cfm?object=Jupiter">
+              <a
+                href="https://solarsystem.jpl.nasa.gov/planets/jupiter/overview/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 More Jupiter facts
               </a>
             </section>
 
             <section id="saturn" class="card">
               <h3>Saturn</h3>
+              <img class="planet-img" src="images/Saturn.jpg" alt="Saturn" />
+
               <p>
                 Saturn is the sixth planet from the Sun and the second largest planet in the
                 Solar System, after Jupiter. Saturn is named after the Roman god Saturn,
@@ -77,106 +85,128 @@
                 and the Hindu Shani.
               </p>
 
-              <table>
-                <caption>Saturn Facts</caption>
-                <tbody>
-                  <tr>
-                    <th>Distance from the Sun</th>
-                    <td>1,426,725,400 km</td>
-                  </tr>
-                  <tr>
-                    <th>Equatorial Radius</th>
-                    <td>60,268 km</td>
-                  </tr>
-                  <tr>
-                    <th>Volume</th>
-                    <td>827,130,000,000,000 km<sup>3</sup></td>
-                  </tr>
-                  <tr>
-                    <th>Mass</th>
-                    <td>568,510,000,000,000,000,000,000 kg</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-wrap">
+                <table class="facts">
+                  <caption>Saturn Facts</caption>
+                  <tbody>
+                    <tr>
+                      <th>Distance from the Sun</th>
+                      <td>1,426,725,400 km</td>
+                    </tr>
+                    <tr>
+                      <th>Equatorial Radius</th>
+                      <td>60,268 km</td>
+                    </tr>
+                    <tr>
+                      <th>Volume</th>
+                      <td>827,130,000,000,000 km<sup>3</sup></td>
+                    </tr>
+                    <tr>
+                      <th>Mass</th>
+                      <td>568,510,000,000,000,000,000,000 kg</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-              <a href="http://solarsystem.jpl.nasa.gov/planets/profile.cfm?object=Saturn">
+              <a
+                href="https://solarsystem.jpl.nasa.gov/planets/saturn/overview/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 More Saturn facts
               </a>
             </section>
 
             <section id="uranus" class="card">
               <h3>Uranus</h3>
+              <img class="planet-img" src="images/Uranus.jpg" alt="Uranus" />
+
               <p>
                 Uranus is the seventh planet from the Sun, and the third-largest and fourth
                 most massive planet in the Solar System. It is named after the ancient Greek
                 deity of the sky Uranus the father of Cronus and grandfather of Zeus.
               </p>
 
-              <table>
-                <caption>Uranus Facts</caption>
-                <tbody>
-                  <tr>
-                    <th>Distance from the Sun</th>
-                    <td>78,412,020 km</td>
-                  </tr>
-                  <tr>
-                    <th>Equatorial Radius</th>
-                    <td>25,559 km</td>
-                  </tr>
-                  <tr>
-                    <th>Volume</th>
-                    <td>69,142,000,000,000 km<sup>3</sup></td>
-                  </tr>
-                  <tr>
-                    <th>Mass</th>
-                    <td>86,849,000,000,000,000,000,000 kg</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-wrap">
+                <table class="facts">
+                  <caption>Uranus Facts</caption>
+                  <tbody>
+                    <tr>
+                      <th>Distance from the Sun</th>
+                      <td>2,870,990,000 km</td>
+                    </tr>
+                    <tr>
+                      <th>Equatorial Radius</th>
+                      <td>25,559 km</td>
+                    </tr>
+                    <tr>
+                      <th>Volume</th>
+                      <td>69,142,000,000,000 km<sup>3</sup></td>
+                    </tr>
+                    <tr>
+                      <th>Mass</th>
+                      <td>86,849,000,000,000,000,000,000 kg</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-              <a href="http://solarsystem.jpl.nasa.gov/planets/profile.cfm?object=Uranus">
+              <a
+                href="https://solarsystem.jpl.nasa.gov/planets/uranus/overview/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 More Uranus facts
               </a>
             </section>
 
             <section id="neptune" class="card">
               <h3>Neptune</h3>
+              <img class="planet-img" src="images/Neptune.jpg" alt="Neptune" />
+
               <p>
                 Neptune is the eighth and farthest planet from the Sun in our Solar System.
                 Named for the Roman god of the sea, it is the fourth-largest planet by diameter
                 and the third-largest by mass.
               </p>
 
-              <table>
-                <caption>Neptune Facts</caption>
-                <tbody>
-                  <tr>
-                    <th>Distance from the Sun</th>
-                    <td>4,498,252,900 km</td>
-                  </tr>
-                  <tr>
-                    <th>Equatorial Radius</th>
-                    <td>24,764 km</td>
-                  </tr>
-                  <tr>
-                    <th>Volume</th>
-                    <td>62,526,000,000,000 km<sup>3</sup></td>
-                  </tr>
-                  <tr>
-                    <th>Mass</th>
-                    <td>102,440,000,000,000,000,000,000 kg</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-wrap">
+                <table class="facts">
+                  <caption>Neptune Facts</caption>
+                  <tbody>
+                    <tr>
+                      <th>Distance from the Sun</th>
+                      <td>4,498,252,900 km</td>
+                    </tr>
+                    <tr>
+                      <th>Equatorial Radius</th>
+                      <td>24,764 km</td>
+                    </tr>
+                    <tr>
+                      <th>Volume</th>
+                      <td>62,526,000,000,000 km<sup>3</sup></td>
+                    </tr>
+                    <tr>
+                      <th>Mass</th>
+                      <td>102,440,000,000,000,000,000,000 kg</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-              <a href="http://solarsystem.jpl.nasa.gov/planets/profile.cfm?object=Neptune">
+              <a
+                href="https://solarsystem.jpl.nasa.gov/planets/neptune/overview/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 More Neptune facts
               </a>
             </section>
           </div>
         </article>
 
-        <!-- คนที่ 4: Sidebar (เพิ่ม class) -->
+        <!-- Sidebar -->
         <aside class="sidebar">
           <p>1st minor related content goes here</p>
           <p>2nd minor related content goes here</p>

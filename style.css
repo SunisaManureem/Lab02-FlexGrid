@@ -1,30 +1,20 @@
 /* =========================================
-   Lab 02 CSS Layouts (Flexbox + Grid) 
+   Lab 03 RWD (Flexbox + Grid)
    ========================================= */
 
-/* คนที่ 6 (รวม): reset */
+/* Reset */
 *,
 *::before,
 *::after { box-sizing: border-box; }
 
 :root{
- 
   --ink: #f6f7ff;
   --muted: rgba(246,247,255,.78);
 
   --purple: #c084fc;
-  --violet: #8b5cf6;
   --cyan: #67e8f9;
   --blue: #93c5fd;
   --pink: #f9a8d4;
-
-  --link: #eaf2ff;
-
-  --frame: rgba(255,255,255,.28);
-  --frame-strong: rgba(255,255,255,.62);
-
-  --glass: rgba(255,255,255,.10);
-  --glass2: rgba(255,255,255,.16);
 
   --maxw: 1200px;
   --gutter: clamp(14px, 2.2vw, 28px);
@@ -34,11 +24,18 @@
   --r-lg: 22px;
 
   --shadow: 0 20px 70px rgba(0,0,0,.55);
+}
 
-  --glow-p: 0 0 36px rgba(192,132,252,.30);
-  --glow-c: 0 0 34px rgba(103,232,249,.26);
-  --glow-b: 0 0 30px rgba(147,197,253,.20);
-  --glow-k: 0 12px 36px rgba(0,0,0,.55);
+/* กัน horizontal scroll + กัน item ใน grid/flex ดันล้น */
+html, body{
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 body{
@@ -59,67 +56,10 @@ body{
     radial-gradient(1050px 760px at 78% 22%, rgba(192,132,252,.42), transparent 62%),
     radial-gradient(1100px 820px at 58% 86%, rgba(249,168,212,.28), transparent 65%),
     radial-gradient(980px 720px at 12% 88%, rgba(147,197,253,.24), transparent 62%),
-
-    radial-gradient(1px 1px at 18px 22px, rgba(255,255,255,.55) 99%, transparent 100%),
-    radial-gradient(1.1px 1.1px at 62px 88px, rgba(255,255,255,.40) 99%, transparent 100%),
-    radial-gradient(0.9px 0.9px at 120px 44px, rgba(255,255,255,.32) 99%, transparent 100%),
-
-    radial-gradient(1.8px 1.8px at 32px 44px, rgba(255,255,255,.46) 99%, transparent 100%),
-    radial-gradient(2.2px 2.2px at 96px 18px, rgba(255,255,255,.34) 99%, transparent 100%),
-
     linear-gradient(180deg, #07071c, #0b0c2d);
 
-  background-size:
-    auto,
-    auto,
-    auto,
-    auto,
-
-    160px 160px,
-    220px 220px,
-    280px 280px,
-
-    420px 420px,
-    520px 520px,
-
-    auto;
-
-  background-repeat:
-    no-repeat,
-    no-repeat,
-    no-repeat,
-    no-repeat,
-
-    repeat,
-    repeat,
-    repeat,
-
-    repeat,
-    repeat,
-
-    no-repeat;
-
+  background-repeat: no-repeat;
   background-attachment: fixed;
-}
-
-body::before{
-  content:"";
-  position: fixed;
-  inset: -16%;
-  pointer-events: none;
-
-  background:
-    radial-gradient(700px 520px at 28% 40%, rgba(103,232,249,.14), transparent 62%),
-    radial-gradient(760px 540px at 72% 44%, rgba(192,132,252,.14), transparent 62%),
-    radial-gradient(820px 580px at 56% 76%, rgba(249,168,212,.10), transparent 62%);
-
-  filter: blur(14px);
-  opacity: .78;
-  animation: drift 14s ease-in-out infinite alternate;
-}
-@keyframes drift{
-  from { transform: translate3d(-1.2%, -1%, 0) scale(1.02); }
-  to   { transform: translate3d( 1.6%,  1.2%, 0) scale(1.06); }
 }
 
 .header, .nav, .main, .footer{
@@ -128,7 +68,7 @@ body::before{
 }
 
 /* =========================
-   คนที่ 1: Header (Flexbox)
+   Header (Flexbox)
    ========================= */
 .header{
   padding: clamp(18px, 2vw, 26px) 0 10px;
@@ -154,7 +94,7 @@ body::before{
 }
 
 /* =========================
-   คนที่ 2: Nav (Flexbox)
+   Nav (Flexbox)
    ========================= */
 .nav{ margin-top: 6px; }
 
@@ -180,12 +120,8 @@ body::before{
 
   box-shadow:
     0 0 0 1px rgba(255,255,255,.08) inset,
-    0 0 30px rgba(103,232,249,.20),
-    0 0 26px rgba(192,132,252,.20),
     0 18px 60px rgba(0,0,0,.55);
 }
-
-.nav-item{ list-style:none; }
 
 .menu{
   display:inline-flex;
@@ -209,18 +145,14 @@ body::before{
 .menu:hover{
   transform: translateY(-1px);
   background: rgba(255,255,255,.12);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.10) inset,
-    0 0 24px rgba(103,232,249,.22),
-    0 0 22px rgba(192,132,252,.22);
 }
 .menu:focus-visible{
   outline: none;
-  box-shadow: 0 0 0 3px rgba(103,232,249,.28), 0 0 20px rgba(192,132,252,.22);
+  box-shadow: 0 0 0 3px rgba(103,232,249,.28);
 }
 
 /* =========================
-   คนที่ 3: Main Layout (Grid)
+   Main Layout (Grid) - Desktop default
    ========================= */
 .main{ margin-top: 16px; }
 
@@ -234,8 +166,15 @@ body::before{
   align-items:start;
 }
 
+/* กัน grid items ดันล้น */
+.main-layout > *,
+.cards > *,
+.card{
+  min-width: 0;
+}
+
 /* =========================
-   คนที่ 6: Title 
+   Title
    ========================= */
 .page-title{
   grid-area: title;
@@ -255,7 +194,7 @@ body::before{
 .content{ grid-area: content; }
 
 /* =========================
-   คนที่ 5: Cards (Grid)
+   Cards (Grid)
    ========================= */
 .cards{
   display:grid;
@@ -277,9 +216,7 @@ body::before{
 
   border: 2px solid transparent;
   background:
-   
     linear-gradient(rgba(255,255,255,.10), rgba(255,255,255,.08)) padding-box,
-    
     linear-gradient(135deg,
       rgba(103,232,249,.95),
       rgba(192,132,252,.95),
@@ -291,32 +228,15 @@ body::before{
 
   box-shadow:
     0 0 0 1px rgba(255,255,255,.10) inset,
-    0 0 34px rgba(103,232,249,.18),
-    0 0 30px rgba(192,132,252,.16),
     0 22px 60px rgba(0,0,0,.58);
 
   transition: transform .18s ease, box-shadow .18s ease;
-}
-
-.card::after{
-  content:"";
-  position:absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(180deg, rgba(10,10,30,.16), rgba(10,10,30,.74));
-}
-
-.card > *{
-  position: relative;
-  z-index: 2;
 }
 
 .card:hover{
   transform: translateY(-3px);
   box-shadow:
     0 0 0 1px rgba(255,255,255,.12) inset,
-    0 0 40px rgba(103,232,249,.22),
-    0 0 36px rgba(192,132,252,.20),
     0 26px 78px rgba(0,0,0,.62);
 }
 
@@ -324,28 +244,12 @@ body::before{
   margin: 0;
   font-size: 1.15rem;
   font-weight: 900;
-
-  display:flex;             
+  display:flex;
   align-items:center;
   gap: 10px;
 }
 
-.card p{
-  margin: 0;
-  color: var(--muted);
-}
-
-.card{
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-#jupiter { background-image: url(images/Jupiter.jpg); }
-#saturn  { background-image: url(images/Saturn.jpg); }
-#uranus  { background-image: url(images/Uranus.jpg); }
-#neptune { background-image: url(images/Neptune.jpg); }
-
+/* icon หน้า title */
 #jupiter h3::before,
 #saturn  h3::before,
 #uranus  h3::before,
@@ -363,12 +267,24 @@ body::before{
     0 0 18px rgba(103,232,249,.16),
     0 0 18px rgba(192,132,252,.14);
 }
-
 #jupiter h3::before{ background-image: url(images/Jupiter.jpg); }
 #saturn  h3::before{ background-image: url(images/Saturn.jpg); }
 #uranus  h3::before{ background-image: url(images/Uranus.jpg); }
 #neptune h3::before{ background-image: url(images/Neptune.jpg); }
 
+.card p{
+  margin: 0;
+  color: var(--muted);
+}
+
+/* responsive image ใน card */
+.planet-img{
+  width: 100%;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+/* link button */
 .card a{
   margin-top: auto;
   display: inline-flex;
@@ -397,40 +313,45 @@ body::before{
   box-shadow: 0 0 0 3px rgba(103,232,249,.30), 0 10px 26px rgba(0,0,0,.45);
 }
 
-table{
+/* =========================
+   Table (กันล้น + ไม่เลื่อนแนวนอน)
+   ========================= */
+.table-wrap{
+  border-radius: 14px;
+  overflow: hidden; /* ทำให้มุมโค้งเนียน */
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(0,0,0,.26);
+}
+
+.facts{
   width: 100%;
   border-collapse: collapse;
   font-size: .92rem;
-
-  background: rgba(0,0,0,.26);
-  border: 1px solid rgba(255,255,255,.16);
-  border-radius: 14px;
-
-  display: block;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  table-layout: fixed; /* กันตัวเลขยาวดันล้น */
 }
 
-caption{
-  margin: 10px 0 8px;
+.facts caption{
+  padding: 10px 10px 8px;
   font-weight: 900;
   text-align: left;
   color: rgba(246,247,255,.92);
 }
 
-th, td{
-  padding: 10px 10px;
+.facts th, .facts td{
+  padding: 10px;
   text-align: left;
   vertical-align: top;
   color: rgba(246,247,255,.88);
-  border-bottom: 1px solid rgba(255,255,255,.10);
+  border-top: 1px solid rgba(255,255,255,.10);
+
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
-tbody tr:last-child th,
-tbody tr:last-child td{ border-bottom: none; }
-tbody tr:nth-child(even){ background: rgba(255,255,255,.04); }
+
+.facts tbody tr:nth-child(even){ background: rgba(255,255,255,.04); }
 
 /* =========================
-   คนที่ 4: Sidebar (Flex) 
+   Sidebar (Flex)
    ========================= */
 .sidebar{
   grid-area: sidebar;
@@ -456,14 +377,12 @@ tbody tr:nth-child(even){ background: rgba(255,255,255,.04); }
 
   box-shadow:
     0 0 0 1px rgba(255,255,255,.10) inset,
-    0 0 30px rgba(192,132,252,.16),
-    0 0 28px rgba(103,232,249,.14),
     0 22px 60px rgba(0,0,0,.55);
 }
 
 .sidebar p{
   margin: 0;
-  padding: 10px 10px;
+  padding: 10px;
   border-radius: var(--r-sm);
 
   background: rgba(255,255,255,.08);
@@ -471,10 +390,13 @@ tbody tr:nth-child(even){ background: rgba(255,255,255,.04); }
   color: rgba(246,247,255,.88);
 }
 
-@media (min-width: 980px){
+@media (min-width: 992px){
   .sidebar{ position: sticky; top: 16px; }
 }
 
+/* =========================
+   Footer
+   ========================= */
 .footer{
   margin-top: 18px;
   padding: 14px 16px;
@@ -503,10 +425,29 @@ tbody tr:nth-child(even){ background: rgba(255,255,255,.04); }
 }
 .footer p{ margin: 0; color: rgba(246,247,255,.84); }
 
-/* =========================
-   Responsive
-   ========================= */
-@media (max-width: 900px){
+/* =========================================
+   Responsive Breakpoints (3 ช่วง)
+   Desktop: default (>= 992px)
+   Tablet : <= 991px
+   Mobile : <= 599px
+   ========================================= */
+
+/* ===== Tablet ===== */
+@media (max-width: 991px){
+  .main-layout{
+    grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+    gap: 16px;
+  }
+  .cards{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sidebar{ position: static; }
+}
+
+/* ===== Mobile (Column drop) ===== */
+@media (max-width: 599px){
+  body{ padding: 0 14px; }
+
   .main-layout{
     grid-template-areas:
       "title"
@@ -514,11 +455,9 @@ tbody tr:nth-child(even){ background: rgba(255,255,255,.04); }
       "sidebar";
     grid-template-columns: 1fr;
   }
-  .page-title{ text-align: left; }
-}
 
-@media (max-width: 520px){
-  body{ padding: 0 14px; }
+  .page-title{ text-align: left; }
+
   .cards{ grid-template-columns: 1fr; }
 
   #jupiter h3::before,
@@ -531,10 +470,5 @@ tbody tr:nth-child(even){ background: rgba(255,255,255,.04); }
 }
 
 @media (prefers-reduced-motion: reduce){
-  body::before{ animation: none; }
   .menu, .card, .card a{ transition: none; }
-}
-
-@media (max-width: 560px){
-  body{ background-attachment: scroll; }
 }
