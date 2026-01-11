@@ -1,5 +1,6 @@
 /* =========================================
-   Lab 03 RWD (Flexbox + Grid)
+   Lab 03 Responsive Web Design
+   Pattern: Column Drop (Desktop -> Tablet -> Mobile)
    ========================================= */
 
 /* Reset */
@@ -318,7 +319,7 @@ body{
    ========================= */
 .table-wrap{
   border-radius: 14px;
-  overflow: hidden; /* ทำให้มุมโค้งเนียน */
+  overflow: hidden;
   border: 1px solid rgba(255,255,255,.16);
   background: rgba(0,0,0,.26);
 }
@@ -327,7 +328,7 @@ body{
   width: 100%;
   border-collapse: collapse;
   font-size: .92rem;
-  table-layout: fixed; /* กันตัวเลขยาวดันล้น */
+  table-layout: fixed;
 }
 
 .facts caption{
@@ -446,7 +447,10 @@ body{
 
 /* ===== Mobile (Column drop) ===== */
 @media (max-width: 599px){
-  body{ padding: 0 14px; }
+  body{
+    padding: 0 14px;
+    background-attachment: scroll; /* กันมือถือบางรุ่นหน่วง */
+  }
 
   .main-layout{
     grid-template-areas:
@@ -459,6 +463,15 @@ body{
   .page-title{ text-align: left; }
 
   .cards{ grid-template-columns: 1fr; }
+
+  .menu{
+    padding: 10px 12px;
+    font-size: 1rem;
+  }
+
+  .card h3{
+    line-height: 1.2;
+  }
 
   #jupiter h3::before,
   #saturn  h3::before,
